@@ -1,0 +1,35 @@
+<div class="wrapper">
+  <div class="register-form">
+    <h2>Registreren</h2>
+    <form name="form">
+      <div class="form-group">
+        <label for="firstName">Voornaam</label>
+        <input type="text" class="form-control" name="firstName" required />
+      </div>
+      <div class="form-group">
+        <label for="lastName">Achternaam</label>
+        <input type="text" class="form-control" name="lastName" required />
+      </div>
+      <div class="form-group">
+          <label for="userName">Gebruikersnaam</label>
+          <input type="text" class="form-control" name="userName" required />
+        </div>
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="text" class="form-control" name="email" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Paswoord</label>
+        <input type="password" class="form-control" name="password" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Bevestig Paswoord</label>
+        <input type="password" class="form-control" name="password" required />
+      </div>
+      <div class="form-group">
+        <button class="btnRegister btn btn-primary">Registreren</button>
+        <a (click)="cancelBtnClick()" class="cancel btn btn-link">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>

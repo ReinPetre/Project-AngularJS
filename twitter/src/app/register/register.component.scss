@@ -1,0 +1,24 @@
+.wrapper {
+  font-family: 'Open Sans', sans-serif;
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  .register-form {
+    max-width: 440px;
+    width: 100%;
+    h2 {
+      margin-bottom: 10px;
+    }
+    .btnRegister {
+      background: rgb(0, 172, 237);
+      border-color: rgb(0, 172, 237);
+      &:hover {
+        background: rgb(0, 132, 180);
+        border-color: rgb(0, 132, 180);
+      }
+    }
+    .cancel {
+      color: rgb(0, 132, 180);
+    }
+  }
+}

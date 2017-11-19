@@ -1,0 +1,24 @@
+.wrapper {
+  font-family: 'Open Sans', sans-serif;
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  .login-form {
+    max-width: 440px;
+    width: 100%;
+    h2 {
+        margin-bottom: 10px;
+    }
+    .btnLogin {
+      background: rgb(0, 172, 237);
+      border-color: rgb(0, 172, 237);
+      &:hover {
+        background: rgb(0, 132, 180);
+        border-color: rgb(0, 132, 180);
+      }
+    }
+    .register {
+      color: rgb(0, 132, 180);
+    }
+  }
+}
