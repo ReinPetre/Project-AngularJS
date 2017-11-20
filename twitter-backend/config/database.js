@@ -1,5 +1,4 @@
 module.exports = {
-    database: 'mongodb://localhost:27017/meanauth',
-    secret: 'yoursecret'
+    database: 'mongodb://root:Letmein@ds042677.mlab.com:42677/twitterclone',
   }
   

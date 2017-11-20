@@ -1,16 +1,19 @@
 var favicon = require('serve-favicon');
 
 // Dependencies
-const express = require('express');
-const path = require('path');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const passport = require('passport');
-const mongoose = require('mongoose');
+var express = require('express');
+var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+let mongoose = require('mongoose');
+let passport = require('passport');
 const config = require('./config/database');
+require('./models/User');
 
 // Connect To Database
-mongoose.connect(config.database);
+mongoose.connect(config.database, { useMongoClient: true })
 
 // On Connection
 mongoose.connection.on('connected', () => {
@@ -25,20 +28,26 @@ mongoose.connection.on('error', (err) => {
 // Initializing Express
 const app = express();
 
-// Routes
-const users = require('./routes/users');
-
 // Port Number
 const port = 3000;
 
-// CORS Middleware
-app.use(cors());
 
-// Set Static Folder
-app.use(express.static(path.join(__dirname, 'public')));
+// Routes
+const users = require('./routes/users');
 
-// Body Parser Middleware
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
+app.use(logger('dev'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+
+
+require('./config/passport');
 
 app.use('/users', users);
 

@@ -1,53 +1,45 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const config = require('../config/database');
+let mongoose = require('mongoose');
+let crypto = require('crypto');
+let jwt = require('jsonwebtoken');
 
-// User Schema
-const UserSchema = mongoose.Schema({
-    
-    firstname: {
-        type: String,
-        required: true
-    },
-    lastname: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String, 
-        required: true
-    },
-    username: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    }
-
+let UserSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    lowercase: true,
+    unique: true
+  },
+  firstname: {
+    type: String,
+  },
+  lastname: {
+    type: String
+  },
+  email: {
+    type: String
+  },
+  hash: String,
+  salt: String
 });
 
-const User = module.exports = mongoose.model('User', UserSchema);
+UserSchema.methods.setPassword = function (password) {
+  this.salt = crypto.randomBytes(32).toString('hex');
+  this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 64, 'sha512').toString('hex');
+};
 
-module.exports.getUserById = function(id, callback){
-  User.findById(id, callback);
-}
+UserSchema.methods.validPassword = function (password) {
+  var hash = crypto.pbkdf2Sync(password, this.salt, 10000, 64, 'sha512').toString('hex');
+  return this.hash === hash;
+};
 
-module.exports.getUserByUsername = function(username, callback){
-  const query = {username: username}
-  User.findOne(query, callback);
-}
+UserSchema.methods.generateJWT = function () {
+  var today = new Date();
+  var exp = new Date(today);
+  exp.setDate(today.getDate() + 60);
+  return jwt.sign({
+    _id: this._id,
+    username: this.username,
+    exp: parseInt(exp.getTime() / 1000),
+  }, process.env.SECRET);
+};
 
-module.exports.addUser = function(newUser, callback){
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(newUser.password, salt, (err, hash) => {
-      if(err) 
-      {
-          throw err;
-      }
-      newUser.password = hash;
-      newUser.save(callback);
-    });
-  });
-}
+mongoose.model('User', UserSchema);

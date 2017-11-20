@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
+let mongoose = require('mongoose');
+let jwt = require('express-jwt');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+//let Recipe = mongoose.model('Recipe');
+//let Ingredient = mongoose.model('Ingredient');
+
+let auth = jwt({secret: process.env.SECRET, userProperty: 'payload'});
 
 module.exports = router;
