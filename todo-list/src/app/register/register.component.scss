@@ -1,10 +1,13 @@
 .wrapper {
   font-family: 'Open Sans', sans-serif;
-  margin-top: 50px;
+  height: 94vh;
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
   .register-form {
-    max-width: 440px;
+    max-width: 600px;
+    margin-top: -70px;
     width: 100%;
     h2 {
       margin-bottom: 10px;
@@ -21,4 +24,8 @@
       color: rgb(0, 132, 180);
     }
   }
+}
+
+.ng-valid[required]  {
+  border: 1px solid #42A948 !important;
 }

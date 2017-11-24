@@ -10,7 +10,7 @@ var bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 let passport = require('passport');
 const config = require('./config/database');
-require('./models/User');
+require('./models/user');
 
 // Connect To Database
 mongoose.connect(config.database, { useMongoClient: true })
@@ -29,7 +29,7 @@ mongoose.connection.on('error', (err) => {
 const app = express();
 
 // Port Number
-const port = 3000;
+const port = process.env.PORT || 8080;
 
 
 // Routes
@@ -53,7 +53,7 @@ app.use('/users', users);
 
 // Index Route
 app.get('/', (req, res) => {
-  res.send('Invalid Endpoint');
+  res.send('Hello world');
 });
 
 // Start Server

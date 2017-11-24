@@ -1,19 +1,24 @@
+import { Project } from "./project";
+
 export class User 
 {
     private _id: number;
-    private _firstName: string;
-    private _lastName: string;
+    private _firstname: string;
+    private _lastname: string;
     private _username: string;
     private _email: string;
-    private _password: string;
+	private _password: string;
+	private _projects: Array<Project>
 
-    constructor(id: number, firstname: string, lastname: string, email: string, password: string)
+    constructor(id: number, firstname: string, lastname: string, email: string, username: string, password: string)
     {
         this._id = id;
-        this._firstName = firstname; 
-        this._lastName = lastname;
-        this._email = email;
-        this._password = password;
+        this._firstname = firstname; 
+        this._lastname = lastname;
+		this._email = email;
+		this._username = username;
+		this._password = password;
+		this._projects = new Array<Project>();
     }
 
 	get id(): number {
@@ -24,20 +29,20 @@ export class User
 		this._id = value;
 	}
 
-	get firstName(): string {
-		return this._firstName;
+	get firstname(): string {
+		return this._firstname;
 	}
 
-	set firstName(value: string) {
-		this._firstName = value;
+	set firstname(value: string) {
+		this._firstname = value;
 	}
 
-	get lastName(): string {
-		return this._lastName;
+	get lastname(): string {
+		return this._lastname;
 	}
 
-	set lastName(value: string) {
-		this._lastName = value;
+	set lastname(value: string) {
+		this._lastname = value;
 	}
 
 	get username(): string {
@@ -62,7 +67,17 @@ export class User
 
 	set password(value: string) {
 		this._password = value;
-    }
+	}
+	
+	get projects(): Array<Project>
+	{
+		return this._projects;
+	}
+
+	set projects(value: Array<Project>)
+	{
+		this._projects = value;
+	}
     
     
 }

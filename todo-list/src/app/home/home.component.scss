@@ -1,8 +1,15 @@
 .wrapper {
-    height: 80vh;
+    height: 94vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: url("../../assets/images/motivational-wallpaper.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: honeydew;
+    width: 100% !important;
+    margin: 0px;
     .jumbotron {
         text-align: center;
         background: none;

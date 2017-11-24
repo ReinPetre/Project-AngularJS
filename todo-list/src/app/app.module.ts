@@ -9,6 +9,10 @@ import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { FormsModule } from '@angular/forms';
+
+import { AuthenticationService } from './services/authentication.service';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 
 
 @NgModule({
@@ -22,6 +26,8 @@ import { RegisterComponent } from './register/register.component';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    FlashMessagesModule.forRoot(),
     RouterModule.forRoot([
       { path: '' , component: HomeComponent},
       { path: '', component: LoginNavbarComponent, outlet: 'navbar'},
@@ -32,7 +38,7 @@ import { RegisterComponent } from './register/register.component';
       { path: '**', redirectTo: '', pathMatch: 'full'}
     ]),
   ],
-  providers: [],
+  providers: [AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

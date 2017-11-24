@@ -1,13 +1,15 @@
 .wrapper {
   font-family: 'Open Sans', sans-serif;
-  margin-top: 50px;
+  height: 94vh;
   display: flex;
   justify-content: center;
+  align-items: center;
   .login-form {
-    max-width: 440px;
+    max-width: 600px;
+    margin-top: -70px;
     width: 100%;
     h2 {
-        margin-bottom: 10px;
+      margin-bottom: 10px;
     }
     .btnLogin {
       background: rgb(0, 172, 237);

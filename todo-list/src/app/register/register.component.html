@@ -1,31 +1,43 @@
-<div class="wrapper">
+<div class="wrapper container">
   <div class="register-form">
+    <flash-messages class="message"></flash-messages>
     <h2>Registreren</h2>
-    <form name="form">
+    <form #f="ngForm" (ngSubmit)='onRegisterSubmit(f.value, f.valid)' name="form">
       <div class="form-group">
         <label for="firstName">Voornaam</label>
-        <input type="text" class="form-control" name="firstName" required />
+        <input type="text" class="form-control" name="firstname" required [(ngModel)]="user.firstname" #firstname="ngModel" />
       </div>
+      <small [hidden]="firstname.valid || (firstname.pristine && !f.submitted)" class="text-danger">
+        Voornaam is verplicht.
+      </small>
       <div class="form-group">
-        <label for="lastName">Achternaam</label>
-        <input type="text" class="form-control" name="lastName" required />
+        <label for="lastname">Achternaam</label>
+        <input type="text" class="form-control" name="lastname" required [(ngModel)]="user.lastname" #lastname="ngModel" />
       </div>
-      <div class="form-group">
-          <label for="userName">Gebruikersnaam</label>
-          <input type="text" class="form-control" name="userName" required />
-        </div>
+      <small [hidden]="lastname.valid || (lastname.pristine && !f.submitted)" class="text-danger">
+        Achternaam is verplicht.
+      </small>
       <div class="form-group">
         <label for="email">E-mail</label>
-        <input type="text" class="form-control" name="email" required />
+        <input type="text" class="form-control" name="email" required [(ngModel)]="user.email" #email="ngModel" />
       </div>
+      <small [hidden]="email.valid || (email.pristine && !f.submitted)" class="text-danger">
+        E-mail is verplicht.
+      </small>
       <div class="form-group">
-        <label for="password">Paswoord</label>
-        <input type="password" class="form-control" name="password" required />
+        <label for="username">Gebruikersnaam</label>
+        <input type="text" class="form-control" name="username" required [(ngModel)]="user.username" #username="ngModel" />
       </div>
+      <small [hidden]="username.valid || (username.pristine && !f.submitted)" class="text-danger">
+        Gebruikersnaam is verplicht.
+      </small>
       <div class="form-group">
-        <label for="password">Bevestig Paswoord</label>
-        <input type="password" class="form-control" name="password" required />
+        <label for="password">Wachtwoord</label>
+        <input type="password" class="form-control" name="password" required [(ngModel)]="user.password" #password="ngModel" />
       </div>
+      <small [hidden]="password.valid || (password.pristine && !f.submitted)" class="text-danger">
+        Wachtwoord is verplicht.
+      </small>
       <div class="form-group">
         <button class="btnRegister btn btn-primary">Registreren</button>
         <a (click)="cancelBtnClick()" class="cancel btn btn-link">Cancel</a>
