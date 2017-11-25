@@ -9,7 +9,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 let passport = require('passport');
+const cors = require('cors');
 const config = require('./config/database');
+
+require('dotenv').config({path: './app.env'})
 require('./models/user');
 
 // Connect To Database
@@ -45,6 +48,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
+
+// CORS Middleware
+app.use(cors());
 
 
 require('./config/passport');

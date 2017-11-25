@@ -2,17 +2,25 @@ import {RouterModule} from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-
+// Components
 import { AppComponent } from './app.component';
 import { LoginNavbarComponent } from './login-navbar/login-navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { FormsModule } from '@angular/forms';
 
-import { AuthenticationService } from './services/authentication.service';
+
+// Modules
+import { FormsModule } from '@angular/forms';
 import { FlashMessagesModule } from 'angular2-flash-messages';
+import {HttpModule} from '@angular/http';
+
+
+// Services
+import { AuthenticationService } from './services/authentication.service';
+import { ValidateService } from './services/validate.service';
+
 
 
 @NgModule({
@@ -27,6 +35,7 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
   imports: [
     BrowserModule,
     FormsModule,
+    HttpModule,
     FlashMessagesModule.forRoot(),
     RouterModule.forRoot([
       { path: '' , component: HomeComponent},
@@ -38,7 +47,7 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
       { path: '**', redirectTo: '', pathMatch: 'full'}
     ]),
   ],
-  providers: [AuthenticationService],
+  providers: [AuthenticationService, ValidateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

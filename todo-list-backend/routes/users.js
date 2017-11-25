@@ -11,11 +11,13 @@ router.post('/register', function (req, res, next) {
       message: 'Please fill out all fields'
     });
   }
-  res.json({succes: true, msg: "User is registered"});
+  // For testing with postman
+  //res.json({succes: true, msg: "User is registered"});
   var user = new User();
   user.username = req.body.username;
   user.fistname = req.body.firstname;
   user.lastname = req.body.lastname;
+  user.email = req.body.email;
   user.setPassword(req.body.password)
   user.save(function (err) {
     if (err) {
@@ -35,7 +37,8 @@ router.post('/login', function (req, res, next) {
       message: 'Please fill out all fields'
     });
   }
-  res.json({success: true, msg: "User is logged in"});
+  // For testing with postman
+  //res.json({success: true, msg: "User is logged in"});
   passport.authenticate('local', function (err, user, info) {
     if (err) {
       return next(err);
