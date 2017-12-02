@@ -1,10 +1,10 @@
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { User } from '../models/user';
+import { User } from '../../models/user';
 import { FlashMessagesService } from 'angular2-flash-messages';
-import { ValidateService } from '../services/validate.service';
+import { ValidateService } from '../../services/validate.service';
 import { nullSafeIsEquivalent } from '@angular/compiler/src/output/output_ast';
-import { AuthenticationService } from '../services/authentication.service';
+import { AuthenticationService } from '../../services/authentication.service';
 import { Observable } from 'rxjs/Rx';
 
 @Component({
@@ -12,7 +12,8 @@ import { Observable } from 'rxjs/Rx';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit 
+{
   @ViewChild('f') form;
   private _user: User;
   passwordCheck: string;
@@ -62,23 +63,33 @@ export class RegisterComponent implements OnInit {
       return false;
     }
     
-    // Register user
-    this._authenticationService.registerUser(this.user).subscribe(data => {
-      if (data) 
+    this._authenticationService.checkUserNameAvailability(this.user.username).subscribe(available => {
+      if(available)
       {
-        console.log("De gebruiker is succesvol geregistreerd!\n" + user.firstname + "\n" + user.lastname + "\n" + user.email + "\n" + user.username + "\n" + user.password + "\n" + isValid);
-        this._flashMessagesService.show('Succes! U bent geregistreerd en kunt nu inloggen.', {cssClass: 'alert alert-success', timeout: 3000 });
-        setTimeout((router: Router) => {
-          this.router.navigate(['/login']);
-        }, 3000);
+        // Register user
+        this._authenticationService.registerUser(this.user).subscribe(data => {
+          if (data) 
+          {
+            console.log("De gebruiker is succesvol geregistreerd!\n" + user.firstname + "\n" + user.lastname + "\n" + user.email + "\n" + user.username + "\n" + user.password + "\n" + isValid);
+            this._flashMessagesService.show('Succes! U bent geregistreerd en kunt nu inloggen.', {cssClass: 'alert alert-success', timeout: 3000 });
+            setTimeout((router: Router) => {
+              this.router.navigate(['/login']);
+            }, 3000);
+          }
+          else{
+            this._flashMessagesService.show('Oeps.. Er is iets misgelopen.', {cssClass: 'alert alert-danger', timeout: 3000 });
+            setTimeout((router: Router) => {
+              this.router.navigate(['/login']);
+            }, 3000);
+          }
+        });
       }
-      else{
-        this._flashMessagesService.show('Oeps.. Er is iets misgelopen.', {cssClass: 'alert alert-success', timeout: 3000 });
-        setTimeout((router: Router) => {
-          this.router.navigate(['/login']);
-        }, 3000);
+      else 
+      {
+        this._flashMessagesService.show('Deze username is al in gebruik, gelieve een andere gebruikernaam te kiezen.', {cssClass: 'alert alert-danger', timeout: 3000 });
       }
-    });
+    })
+    
   }
 
   cancelBtnClick() 

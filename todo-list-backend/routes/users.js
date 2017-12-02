@@ -7,7 +7,7 @@ let User = mongoose.model('User');
 
 router.post('/register', function (req, res, next) {
   if (!req.body.username || !req.body.password || !req.body.firstname || !req.body.lastname || !req.body.email) {
-    return res.status(400).json({
+    return res.json({
       message: 'Please fill out all fields'
     });
   }
@@ -15,10 +15,11 @@ router.post('/register', function (req, res, next) {
   //res.json({succes: true, msg: "User is registered"});
   var user = new User();
   user.username = req.body.username;
-  user.fistname = req.body.firstname;
+  user.firstname = req.body.firstname;
   user.lastname = req.body.lastname;
   user.email = req.body.email;
   user.setPassword(req.body.password)
+  console.log(user);
   user.save(function (err) {
     if (err) {
       return res.json({
@@ -33,7 +34,7 @@ router.post('/register', function (req, res, next) {
 
 router.post('/login', function (req, res, next) {
   if (!req.body.username || !req.body.password) {
-    return res.status(400).json({
+    return res.json({
       message: 'Please fill out all fields'
     });
   }
@@ -48,13 +49,13 @@ router.post('/login', function (req, res, next) {
         token: user.generateJWT()
       });
     } else {
-      return res.status(401).json(info);
+      return res.json(info);
     }
   })(req, res, next);
 });
 
 router.post('/checkusername', function (req, res, next) {
-  // if (req.body.username) {
+  if (req.body.username) {
   User.find({
     username: req.body.username
   }, function (err, result) {
@@ -68,7 +69,7 @@ router.post('/checkusername', function (req, res, next) {
       })
     }
   });
-  // }
+  }
 });
 
 module.exports = router;

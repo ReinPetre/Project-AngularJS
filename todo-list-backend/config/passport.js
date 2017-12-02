@@ -13,12 +13,12 @@ passport.use(new LocalStrategy(
             }
             if (!user) {
                 return done(null, false, {
-                    message: 'Incorrect username.'
+                    message: 'Incorrecte gebruikersnaam.'
                 });
             }
             if (!user.validPassword(password)) {
                 return done(null, false, {
-                    message: 'Incorrect password.'
+                    message: 'Incorrect wachtwoord.'
                 });
             }
             return done(null, user);
