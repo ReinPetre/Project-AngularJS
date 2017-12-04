@@ -1,5 +1,8 @@
+import {Todo} from '../models/todo';
+import {Project} from '../models/project';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
+import { unescapeIdentifier } from '@angular/compiler';
 
 @Injectable()
 export class ValidateService {
@@ -52,5 +55,43 @@ export class ValidateService {
   {
     const regexAlphanumeric = /^[a-z0-9]+$/i;
     return regexAlphanumeric.test(username);
+  }
+
+  validateProject(project: Project)
+  {
+    if(project.projectName == undefined || project.projectName == "" || project.projectName == " ")
+    {
+      return false;
+    }
+    else
+    {
+      return true;
+    }
+  }
+
+  validateTodo(todo: Todo)
+  {
+    if(todo.description == undefined || todo.description == "" || todo.description == " " || todo.dueDate == undefined)
+    {
+      return false;
+    }
+    else
+    {
+      return true;
+    }
+  }
+
+  validatDueDate(todo: Todo)
+  {
+    let today = new Date();
+    
+    if(todo.dueDate < today)
+    {
+      return false;
+    }
+    else
+    {
+      return true;
+    }
   }
 }

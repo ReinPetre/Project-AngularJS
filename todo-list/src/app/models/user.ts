@@ -10,7 +10,7 @@ export class User
 	private _password: string;
 	private _projects: Array<Project>
 
-    constructor(id: number, firstname: string, lastname: string, email: string, username: string, password: string)
+    constructor(id: number, firstname: string, lastname: string, email: string, username: string, password: string, projects?: Project[])
     {
         this._id = id;
         this._firstname = firstname; 
@@ -18,7 +18,7 @@ export class User
 		this._email = email;
 		this._username = username;
 		this._password = password;
-		this._projects = new Array<Project>();
+		this._projects = projects || new Array<Project>();
     }
 
 	get id(): number {
@@ -77,8 +77,7 @@ export class User
 	set projects(value: Array<Project>)
 	{
 		this._projects = value;
-	}
-    
+	}    
     
 }
 

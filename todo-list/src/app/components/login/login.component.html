@@ -2,7 +2,7 @@
   <div class="login-form">
     <flash-messages class="message"></flash-messages>
     <h2>Login</h2>
-    <form #f='ngForm' (ngSubmit)='onLoginSubmit(f.value, f.valid)' name="form">
+    <form #f='ngForm' (ngSubmit)='onLoginSubmit(f.value)' name="form">
       <div class="form-group">
         <label for="username">Gebruikersnaam</label>
         <input type="text" class="form-control" name="username" required [(ngModel)]="user.username" #username="ngModel"/>

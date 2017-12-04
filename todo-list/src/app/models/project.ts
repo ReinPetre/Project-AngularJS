@@ -7,11 +7,10 @@ export class Project
     private _projectName: string;
     private _todos: Array<Todo>;
 
-    constructor(id: number, projectName: string)
+    constructor(projectName: string, todos?: Todo[])
     {
-        this._id = id;
         this._projectName = projectName;
-        this._todos = new Array<Todo>();
+        this._todos = todos || new Array<Todo>();
     }
 
 	get id(): number {
@@ -22,12 +21,41 @@ export class Project
 		this._id = value;
 	}
 
-	get name(): string {
+	get projectName(): string {
 		return this._projectName;
 	}
 
-	set name(value: string) {
+	set projectName(value: string) {
 		this._projectName = value;
+	}
+
+
+	get todos(): Array<Todo> {
+		return this._todos;
+	}
+
+	set todos(value: Array<Todo>) {
+		this._todos = value;
+	}
+
+	addTodo(todo: Todo)
+	{
+		this._todos.push(todo);
+	}
+
+	static fromJSON(json): Project {
+        const project = new Project(json.projectName, json.todos);
+        project.id = json._id;
+        return project;
+	}
+
+	toJSON()
+	{
+		return {
+			_id : this._id,
+			projectName : this._projectName,
+			todos : this._todos
+		}
 	}
     
 }

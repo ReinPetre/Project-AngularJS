@@ -46,7 +46,8 @@ router.post('/login', function (req, res, next) {
     }
     if (user) {
       return res.json({
-        token: user.generateJWT()
+        token: user.generateJWT(),
+        user: user
       });
     } else {
       return res.json(info);
@@ -56,20 +57,46 @@ router.post('/login', function (req, res, next) {
 
 router.post('/checkusername', function (req, res, next) {
   if (req.body.username) {
-  User.find({
-    username: req.body.username
-  }, function (err, result) {
-    if (result.length) {
-      res.json({
-        'username': 'alreadyexists'
-      })
-    } else {
-      res.json({
-        'username': 'ok'
-      })
-    }
-  });
+    User.find({
+      username: req.body.username
+    }, function (err, result) {
+      if (result.length) {
+        res.json({
+          'username': 'alreadyexists'
+        })
+      } else {
+        res.json({
+          'username': 'ok'
+        })
+      }
+    });
   }
+});
+
+
+// Get user by username
+router.get('/:username', function (req, res) {
+  req.user.populate('projects', function (err, rec) {
+    if (err) return next(err);
+    res.json(rec);
+  });
+});
+
+
+router.param('username', function (req, res, next, username) {
+  let query = User.findOne({
+    username: username
+  });
+  query.exec(function (err, user) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return next(new Error('not found ' + username));
+    }
+    req.user = user;
+    return next();
+  });
 });
 
 module.exports = router;

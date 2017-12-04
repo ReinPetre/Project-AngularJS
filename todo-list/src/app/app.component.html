@@ -1,6 +1,8 @@
 <div class="wrapper">
   <div class="viewheight">
-    <router-outlet name="navbar"></router-outlet>
+    <app-login-navbar *ngIf='!(currentUser | async)' ></app-login-navbar>
+    <app-projects-overview-navbar *ngIf='(currentUser | async)' ></app-projects-overview-navbar>
+    <!--<router-outlet name="navbar"></router-outlet>-->
     <div id="content" role="main">
       <!-- Rendering body -->
       <router-outlet></router-outlet>

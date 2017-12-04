@@ -14,6 +14,8 @@ const config = require('./config/database');
 
 require('dotenv').config({path: './app.env'})
 require('./models/user');
+require('./models/project');
+require('./models/todo');
 
 // Connect To Database
 mongoose.connect(config.database, { useMongoClient: true })
@@ -36,7 +38,9 @@ const port = process.env.PORT || 8080;
 
 
 // Routes
-const users = require('./routes/users');
+var users = require('./routes/users');
+var projects = require('./routes/projects');
+var todos = require('./routes/todos');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -56,6 +60,8 @@ app.use(cors());
 require('./config/passport');
 
 app.use('/users', users);
+app.use('/projects', projects);
+app.use('/todos', todos);
 
 // Index Route
 app.get('/', (req, res) => {

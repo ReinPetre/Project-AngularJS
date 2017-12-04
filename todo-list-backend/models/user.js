@@ -8,7 +8,7 @@ let UserSchema = new mongoose.Schema({
     unique: true
   },
   firstname: {
-    type: String,
+    type: String
   },
   lastname: {
     type: String
@@ -16,6 +16,10 @@ let UserSchema = new mongoose.Schema({
   email: {
     type: String
   },
+  projects: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Project'
+  }],
   hash: String,
   salt: String
 });

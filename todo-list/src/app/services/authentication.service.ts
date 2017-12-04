@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { User } from '../models/user';
+import { Project } from '../models/project';
 
 @Injectable()
 export class AuthenticationService {
@@ -19,6 +20,15 @@ export class AuthenticationService {
   {
     return this._user$;
   }
+
+  get token(): string {
+    return JSON.parse(localStorage.getItem('currentUser')).token;
+  }
+
+  /* getLoggedInUser()
+  {
+    return this.http.get(`${this._url}/${JSON.parse(localStorage.getItem("currentUser")).username}`);
+  } */
 
   registerUser(user: User): Observable<boolean> {
     return this.http.post(`${this._url}/register`, { 
@@ -55,8 +65,9 @@ export class AuthenticationService {
     return this.http.post(`${this._url}/login`, { username: username, password: password })
       .map(res => res.json()).map(res => {
         const token = res.token;
+        const userid = res.user._id;
         if (token) {
-          localStorage.setItem('currentUser', JSON.stringify({ username: username, token: token }));
+          localStorage.setItem('currentUser', JSON.stringify({ username: username, userid: userid, token: token }));
           this._user$.next(username);
           return true;
         } else {

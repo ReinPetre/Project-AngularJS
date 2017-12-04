@@ -11,6 +11,8 @@ import {HttpModule} from '@angular/http';
 import { AuthenticationService } from './services/authentication.service';
 import { ValidateService } from './services/validate.service';
 import { AuthGuard } from './guards/auth.guard';
+import { ProjectService } from './services/project.service';
+import { TodoService } from './services/todo.service';
 
 // Components
 import { AppComponent } from './app.component';
@@ -21,7 +23,8 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { ProjectsOverviewComponent } from './components/projects-overview/projects-overview.component';
-import { ProjectsOverviewNavbarComponent } from './components/projects-overview-navbar/projects-overview-navbar.component'
+import { ProjectsOverviewNavbarComponent } from './components/projects-overview-navbar/projects-overview-navbar.component';
+import { TodosOverviewComponent } from './components/todos-overview/todos-overview.component'
 
 
 
@@ -35,7 +38,8 @@ import { ProjectsOverviewNavbarComponent } from './components/projects-overview-
     RegisterComponent,
     LogoutComponent,
     ProjectsOverviewComponent,
-    ProjectsOverviewNavbarComponent
+    ProjectsOverviewNavbarComponent,
+    TodosOverviewComponent
   ],
   imports: [
     BrowserModule,
@@ -50,12 +54,12 @@ import { ProjectsOverviewNavbarComponent } from './components/projects-overview-
       { path: 'register' , component: RegisterComponent},
       { path: 'logout', component: LogoutComponent},
       { path: 'projects-overview', component: ProjectsOverviewComponent, canActivate:[AuthGuard] },
-      { path: 'projects-overview', component: ProjectsOverviewNavbarComponent, outlet: 'navbar', canActivate:[AuthGuard]},
+      { path: 'todos-overview/:projectid', component: TodosOverviewComponent, canActivate:[AuthGuard]},
 
       { path: '**', redirectTo: '', pathMatch: 'full'}
     ]),
   ],
-  providers: [AuthenticationService, ValidateService, AuthGuard],
+  providers: [AuthenticationService, ValidateService, AuthGuard, ProjectService, TodoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
