@@ -86,7 +86,7 @@ export class RegisterComponent implements OnInit
       }
       else 
       {
-        this._flashMessagesService.show('Deze username is al in gebruik, gelieve een andere gebruikernaam te kiezen.', {cssClass: 'alert alert-danger', timeout: 3000 });
+        this._flashMessagesService.show('Deze gebruikersnaam is al in gebruik, gelieve een andere gebruikernaam te kiezen.', {cssClass: 'alert alert-danger', timeout: 3000 });
       }
     })
     

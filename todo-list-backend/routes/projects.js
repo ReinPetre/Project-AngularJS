@@ -34,6 +34,18 @@ router.get('/:projectid', auth, function (req, res) {
     });
 });
 
+// Update project
+router.post('/:projectid', auth, function (req, res, next) {
+    req.project.projectName = req.body.projectName;
+    req.project.save(function (err, project) {
+        if (err) {
+            return next(err);
+        }
+        console.log(project);
+        res.json(project);
+    });
+});
+
 // Get projects from user by id
 router.get('/user/:userid', auth, function (req, res, next) {
     req.user.populate("projects", function (err, user) {

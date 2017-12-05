@@ -26,4 +26,16 @@ export class TodoService {
     .map(res => res.json());
   }
 
+  deleteTodoFromProject(projectId, todo: Todo)
+  {
+    return this.http.delete(`${this._url}/${projectId}/${todo.id}`, { headers: new Headers({Authorization: `Bearer ${this.authenticationService.token}`}) })
+    .map(res => res.json());
+  }
+
+  updateTodo(todo: Todo)
+  {
+    return this.http.post(`${this._url}/${todo.id}`, todo, { headers: new Headers({Authorization: `Bearer ${this.authenticationService.token}`}) })
+    .map(res => res.json());
+  }
+
 }

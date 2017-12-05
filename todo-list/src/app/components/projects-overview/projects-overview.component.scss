@@ -2,9 +2,13 @@
   border: 1px solid #42A948 !important;
 }
 
+.ng-invalid[required] {
+  border: 1px solid #ff0000 !important;
+}
+
 .wrapper {
   font-family: 'Open Sans', sans-serif;
-  height: 94vh;
+  min-height: 94vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,13 +28,20 @@
       margin-top: 20px;
       margin-bottom: 40px;
     }
+    .position-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 350px;
+    }
     .project {
       //border: 1px solid black;
       //background-color: lightgoldenrodyellow;
       display: flex;
       justify-content: space-between;
-      height: 52px;
-      margin: 30px 0;
+      min-height: 52px;
+      margin: 10px 0;
       width: 100%;
       .projectName {
         width: 100%;
@@ -50,24 +61,63 @@
           }
         }
       }
-      .projectButton {
-        margin-top: 0px;
-        height: 50px; //background-color: pink;
+      .project-buttons {
         display: flex;
         justify-content: center;
         align-items: center;
-        button {
-          height: 50px;
-        }
-        &.first {
-          margin-right: 10px;
-          margin-left: 10px;
+        .projectButton {
+          margin-top: 0px;
+          height: 50px; //background-color: pink;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          button {
+            height: 50px;
+            width: 50px;
+          }
+          &.first {
+            margin-right: 10px;
+            margin-left: 10px;
+          }
         }
       }
     }
+    .noActiveProjects {
+      p {
+        text-align: center;
+        vertical-align: center;
+      }
+    }
   }
-  .buttonBottom {
-    position: relative;
+  .addButton {
+    position: absolute;
     bottom: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .wrapper {
+    .project {
+      flex-direction: column;
+      margin-bottom: 40px !important;
+      .project-buttons {
+        justify-content: space-between !important;
+        .projectButton {
+          margin-left: 0 !important;
+          width: 49%;
+          button {
+            width: 100% !important;
+          }
+        }
+      }
+      .projectName {
+        height: 50px;
+        margin-bottom: 10px;
+        justify-content: center;        
+        p {
+          margin-left: 0px !important;
+        }
+      }
+    }
   }
 }

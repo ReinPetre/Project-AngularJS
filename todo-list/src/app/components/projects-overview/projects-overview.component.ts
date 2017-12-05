@@ -16,6 +16,7 @@ export class ProjectsOverviewComponent implements OnInit {
 
   private _projects: Project[];
   private _newProject: Project
+  private _selectdProject: Project;
 
   constructor(
     private router: Router,
@@ -23,13 +24,13 @@ export class ProjectsOverviewComponent implements OnInit {
     private _flashMessagesService: FlashMessagesService,
     private _validateService: ValidateService,
   ) { 
-    this._newProject = new Project("");
+    this._newProject = new Project(null);
+    this._selectdProject = new Project(null);
   }
 
   ngOnInit() 
   {
     this._projectService.getProjectsFromUser(JSON.parse(localStorage.getItem("currentUser")).userid).subscribe(items => this._projects = items);
-    (window as any).toggleProjectModal();
   }
 
   get projects(): Project[]
@@ -40,6 +41,11 @@ export class ProjectsOverviewComponent implements OnInit {
   get newProject(): Project
   {
     return this._newProject;
+  }
+
+  get selectedProject(): Project
+  {
+    return this._selectdProject;
   }
 
   onAddProjectSubmit()
@@ -65,5 +71,33 @@ export class ProjectsOverviewComponent implements OnInit {
   projectNameClicked(projectid)
   {
     this.router.navigateByUrl('/todos-overview/'+projectid);
+  }
+
+  onEditButtonClicked(project: Project)
+  {
+    this._selectdProject = project;
+  }
+
+  onEditProjectSubmit()
+  {
+    if(!this._validateService.validateProject(this.selectedProject))
+    {
+      return false;
+    }
+
+    this._projectService.updateProject(this.selectedProject).subscribe(item => console.log(item));
+    location.reload();
+  }
+
+  checkIfUserHasActiveProjects(): boolean
+  {
+    if(this.projects == undefined || this.projects.length <= 0)
+    {
+      return false
+    }
+    else
+    {
+      return true
+    }
   }
 }

@@ -38,6 +38,12 @@ export class ProjectService {
     return this.http.get(`${this._url}/${projectid}`, { headers: new Headers({Authorization: `Bearer ${this.authenticationService.token}`}) })
     .map(response => Project.fromJSON(response.json()));
   }
+
+  updateProject(project: Project)
+  {
+    return this.http.post(`${this._url}/${project.id}`, project, { headers: new Headers({Authorization: `Bearer ${this.authenticationService.token}`}) })
+    .map(res => res.json());
+  }
   
 
 }

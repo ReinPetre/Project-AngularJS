@@ -9,26 +9,33 @@
         </div>
         <div class='todo-buttons'>
           <div class="todoButton first">
-            <button type="button" class="btn btn-default">Bewerken</button>
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editTodoModal" (click)='onEditButtonClicked(todo)'>
+              <span class="glyphicon glyphicon-edit"></span>
+            </button>
           </div>
           <div class="todoButton">
-            <button type="button" class="btn btn-success" (click)='onDeleteButtonClicked()'>Done</button>
+            <button type="button" class="btn btn-success" (click)='onCompleteButtonClicked(todo)'>
+              <span class="glyphicon glyphicon-ok"></span>
+            </button>
           </div>
         </div>
       </div>
+      <div *ngIf="!checkIfProjectHasActiveTodos()" class="noActiveTodos">
+        <p>U heeft op dit moment geen todo's voor dit project.</p>
+      </div>
     </div>
     <div class="action-buttons">
-      <button type="button" class="btn btn-default btn-lg buttonBottom" (click)='onBackButtonClicked()'>
-        <span class='glyphicon glyphicon-chevron-left'></span> Terug</button>
-      <button type="button" class="btn btn-default btn-lg buttonBottom" id="addTodo">Todo Toevoegen</button>
+      <button type="button" class="btn btn-default btn-lg" (click)='onBackButtonClicked()'>
+        <span class='glyphicon glyphicon-chevron-left'></span>Terug</button>
+      <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#todoModal">Todo Toevoegen</button>
     </div>
   </div>
 </div>
 
-<!-- Project Modal -->
+<!-- Create Todo Modal -->
 <div class="modal fade" id="todoModal" role="dialog">
   <div class="modal-dialog">
-
+  <!-- Modal Content -->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -36,17 +43,17 @@
         <h1>Nieuwe todo toevoegen</h1>
       </div>
       <div class="modal-body">
-        <form #f='ngForm' (ngSubmit)='onAddTodoSubmit()' role="form">
+        <form #f='ngForm' (ngSubmit)='onAddTodoSubmit()' id="editTodoForm" role="form" >
           <div class="form-group">
-            <label for="todoName">Naam Todo</label>
-            <input type="text" class="form-control" id="todoName" name="todoName" required placeholder="Vb: Layout homepagina in orde brengen"
-              [(ngModel)]="newTodo.description" #todoName="ngModel">
+            <label for="todoDescription">Todo Beschrijving</label>
+            <input type="text" class="form-control" name="todoDescription" required placeholder="Vb: Layout homepagina in orde brengen"
+              [(ngModel)]="newTodo.description" #todoDescription="ngModel">
           </div>
           <div class="form-group">
             <label for="dueDate">Deadline</label>
             <input type="date" class="form-control" id="datePicker" name="dueDate" required [(ngModel)]="newTodo.dueDate" #dueDate="ngModel">
           </div>
-          <button type="submit" class="btn btn-default btn-success btn-block">Toevoegen</button>
+          <button type="submit" class="btn btn-default btn-success btn-block" id="addTodo">Toevoegen</button>
         </form>
       </div>
       <div class="modal-footer">
@@ -56,3 +63,34 @@
     </div>
   </div>
 </div>
+
+<!-- Edit Todo Modal -->
+<div class="modal fade" id="editTodoModal" role="dialog">
+    <div class="modal-dialog">
+    <!-- Modal Content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h1>Todo wijzigen</h1>
+        </div>
+        <div class="modal-body">
+          <form #f2='ngForm' (ngSubmit)='onEditTodoSubmit()' role="form">
+            <div class="form-group">
+              <label for="editTodoDescription">Todo Beschrijving</label>
+              <input type="text" class="form-control" name="editTodoDescription" required placeholder="Vb: Layout homepagina in orde brengen"
+                [(ngModel)]="selectedTodo.description" #editTodoDescription="ngModel">
+            </div>
+            <div class="form-group">
+              <label for="editDueDate">Deadline</label>
+              <input type="date" class="form-control" name="editDueDate" id="datePicker" required [(ngModel)]="selectedTodo.dueDate" #editDueDate="ngModel">
+            </div>
+            <button type="submit" class="btn btn-default btn-success btn-block" id="editTodo">Wijzigen</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-default btn-default pull-left" data-dismiss="modal">
+            <span class="glyphicon glyphicon-remove"></span> Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>

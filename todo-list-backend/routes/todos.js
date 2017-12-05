@@ -13,7 +13,7 @@ let auth = jwt({
 // TODO: auth toevoegen waar nodig! 
 
 // Get all todos
-router.get('/', function (req, res, next) {
+router.get('/', auth, function (req, res, next) {
     let query = Todo.find()
     query.exec(function (err, todos) {
         if (err) return next(err);
@@ -22,20 +22,18 @@ router.get('/', function (req, res, next) {
     })
 });
 
-
-
 // Get todo by id
-router.get('/:todoid', function (req, res, next) {
+/* router.get('/:todoid', function (req, res, next) {
     let query = Todo.findById(id);
     query.exec(function (err, todo) {
         if (err) return next(err);
         console.log(todo);
         res.json(todo);
     });
-});
+}); */
 
 // Get todos from project by id
-router.get('/project/:projectid', function (req, res, next) {
+router.get('/project/:projectid', auth, function (req, res, next) {
     req.project.populate("todos", function (err, project) {
         if (err) {
             return next(err);
@@ -44,20 +42,33 @@ router.get('/project/:projectid', function (req, res, next) {
     });
 });
 
+// Update todo
+router.post('/:todoid', auth, function (req, res, next) {
+    req.todo.description = req.body.description;
+    req.todo.dueDate = req.body.dueDate;
+    req.todo.save(function (err, todo) {
+        if (err) {
+            return next(err);
+        }
+        console.log(todo);
+        res.json(todo);
+    });
+});
+
 
 // Add new todo to a project
-router.post('/project/:projectid', function (req, res, next) {
+router.post('/project/:projectid', auth, function (req, res, next) {
     let todo = new Todo({
         description: req.body.description,
         dueDate: req.body.dueDate,
         completed: false
     });
-    todo.save(function (err, project) {
+    todo.save(function (err, todo) {
         if (err) {
             return next(err);
         }
         req.project.todos.push(todo)
-        req.project.save(function (err, user) {
+        req.project.save(function (err, project) {
             if (err) {
                 return next(err);
             }
@@ -68,7 +79,7 @@ router.post('/project/:projectid', function (req, res, next) {
 });
 
 // Remove todo from project
-router.delete('/:projectid/:todoid', function (req, res, next) {
+router.delete('/:projectid/:todoid', auth, function (req, res, next) {
     let index = req.project.todos.indexOf(req.todo._id)
     //console.log(index);
     req.project.todos.splice(index, 1);
@@ -117,4 +128,5 @@ router.param('todoid', function (req, res, next, id) {
         return next();
     });
 });
+
 module.exports = router;

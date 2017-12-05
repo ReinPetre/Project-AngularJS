@@ -2,9 +2,14 @@
   border: 1px solid #42A948 !important;
 }
 
+.ng-invalid[required] {
+  border: 1px solid #ff0000 !important;
+}
+
+
 .wrapper {
   font-family: 'Open Sans', sans-serif;
-  height: 94vh;
+  min-height: 94vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,7 +18,7 @@
     flex-direction: column;
     align-items: center;
     min-height: 550px;
-    position: relative;
+    position: relative; //border: 1px black solid;
   }
   .todo-list {
     width: 100%;
@@ -36,20 +41,27 @@
         justify-content: space-between;
         text-decoration: none;
         background-color: black;
+        border-radius: 4px;
+        padding-top: 5px;
+        padding-bottom: 5px;
         p {
           text-decoration: none;
           color: white;
           font-size: 18px;
           &:first-of-type {
             margin-left: 20px;
+            margin-right: 10px;
           }
           &:last-of-type {
             margin-right: 20px;
+            margin-left: 10px;
           }
         }
       }
       .todo-buttons {
         display: flex;
+        justify-content: center;
+        align-items: center;
         .todoButton {
           margin-top: 0px;
           height: 50px;
@@ -58,6 +70,7 @@
           align-items: center;
           button {
             height: 50px;
+            width: 50px;
           }
           &.first {
             margin-right: 10px;
@@ -66,41 +79,58 @@
         }
       }
     }
+    .noActiveTodos {
+      p {
+        text-align: center;
+        vertical-align: center;
+      }
+    }
   }
-  .buttonBottom {
-    position: relative;
+  .action-buttons {
+    position: absolute;
     bottom: 10px;
   }
 }
 
-@media (max-width: 850px) {
-  .todo {
-    flex-direction: column;
-    margin-bottom: 40px;
-    .todo-buttons {
-      justify-content: space-between;
-      .todoButton {
-        margin-left: 0 !important;
-      }
-    }
-    .todo-details {
+@media (max-width: 600px) {
+  .wrapper {
+    .todo {
       flex-direction: column;
-      justify-content: center;
-      margin-bottom: 10px;
-      padding-top: 5px;
-      padding-bottom: 5px;
-      p {
-        text-align: center;
-        &:first-of-type {
+      margin-bottom: 40px;
+      .todo-buttons {
+        justify-content: space-between !important;
+        .todoButton {
+          margin-left: 0 !important;
+          width: 49%;
+          button {
+            width: 100% !important;
+          }
+        }
+      }
+      .todo-details {
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 10px;
+        p {
+          text-align: center;
+          &:first-of-type {
             margin-left: 10px !important;
-            margin-right: 10px;
           }
           &:last-of-type {
             margin-right: 10px !important;
-            margin-left: 10px;
           }
+        }
       }
     }
   }
 }
 
+@media (max-width: 360px) {
+  .action-buttons {
+    display: flex;
+    flex-direction: column;
+    button:first-of-type {
+      margin-bottom: 10px;
+    }
+  }
+}
