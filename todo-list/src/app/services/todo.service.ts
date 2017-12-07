@@ -34,6 +34,7 @@ export class TodoService {
 
   updateTodo(todo: Todo)
   {
+    console.log("TodoService was reached");
     return this.http.post(`${this._url}/${todo.id}`, todo, { headers: new Headers({Authorization: `Bearer ${this.authenticationService.token}`}) })
     .map(res => res.json());
   }

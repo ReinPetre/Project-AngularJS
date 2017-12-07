@@ -64,7 +64,6 @@ export class TodosOverviewComponent implements OnInit {
     this._projectId = this._route.snapshot.paramMap.get('projectid');
     this._todoService.getTodosFromProject(this.projectId).subscribe(items => this._todos = items);
     this._projectService.getProjectById(this._projectId).subscribe(item => this._selectedProject = item); 
-    (window as any).dismissEditTodoModal();
   }
 
   sortTodos()
@@ -119,15 +118,11 @@ export class TodosOverviewComponent implements OnInit {
 
   onEditTodoSubmit()
   {
-    if(!this._validateService.validateTodo(this.newTodo))
+    if(!this._validateService.validateTodo(this.selectedTodo))
     {
+      console.log("something is wrong");
       return false;
     }
-
-    /* if(!this._validateService.validatDueDate(this.newTodo))
-    {
-      return false;
-    } */
     
     this._todoService.updateTodo(this.selectedTodo).subscribe(item => console.log(item));
     location.reload();
