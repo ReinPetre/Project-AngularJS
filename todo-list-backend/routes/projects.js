@@ -11,7 +11,6 @@ let auth = jwt({
     userProperty: 'payload'
 });
 
-// TODO: auth toevoegen waar nodig! 
 
 // Get all projects
 router.get('/', auth, function (req, res, next) {

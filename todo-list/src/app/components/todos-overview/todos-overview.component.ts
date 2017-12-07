@@ -35,6 +35,7 @@ export class TodosOverviewComponent implements OnInit {
 
   get todos(): Todo[]
   {
+    this.sortTodos();
     return this._todos;
   }
 
@@ -64,6 +65,22 @@ export class TodosOverviewComponent implements OnInit {
     this._todoService.getTodosFromProject(this.projectId).subscribe(items => this._todos = items);
     this._projectService.getProjectById(this._projectId).subscribe(item => this._selectedProject = item); 
     (window as any).dismissEditTodoModal();
+  }
+
+  sortTodos()
+  {
+    // Sort todos by date
+    this._todos.sort((t1, t2) => {
+      if(t1.dueDate < t2.dueDate)
+      {
+        return -1;
+      } 
+      if(t1.dueDate > t2.dueDate) 
+      {
+        return 1;
+      }
+        return 0;
+    });
   }
 
   onBackButtonClicked()

@@ -4,7 +4,9 @@
   "private": true,
   "main": "app.js",
   "scripts": {
-    "start": "source app-env && node app"
+    "start": "node app",
+    "start-test" : "source app-env.spec && node app",
+    "test": "source app-env.spec && node ./node_modules/jasmine/bin/jasmine.js"
   },
   "dependencies": {
     "body-parser": "~1.17.1",
@@ -21,5 +23,9 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "serve-favicon": "~2.4.2"
+  },
+  "devDependencies": {
+    "jasmine": "^2.8.0",
+    "request": "^2.83.0"
   }
 }

@@ -31,10 +31,28 @@ export class ProjectsOverviewComponent implements OnInit {
   ngOnInit() 
   {
     this._projectService.getProjectsFromUser(JSON.parse(localStorage.getItem("currentUser")).userid).subscribe(items => this._projects = items);
+    
   }
 
+  sortProjects()
+  {
+    // Sort Lineups and Referees alphabetically with 1 second delay
+    this._projects.sort((p1, p2) => {
+      if(p1.projectName < p2.projectName)
+      {
+        return -1;
+      } 
+      if(p1.projectName > p2.projectName) 
+      {
+        return 1;
+      }
+        return 0;
+    });
+  }
+  
   get projects(): Project[]
   {
+    this.sortProjects();
     return this._projects;
   }
   

@@ -18,11 +18,11 @@ require('./models/project');
 require('./models/todo');
 
 // Connect To Database
-mongoose.connect(config.database, { useMongoClient: true })
+mongoose.connect(process.env.JUSTDOIT_DATABASE, { useMongoClient: true })
 
 // On Connection
 mongoose.connection.on('connected', () => {
-  console.log('Connected to database '+config.database);
+  console.log('Connected to database '+ config.database);
 });
 
 // On Error

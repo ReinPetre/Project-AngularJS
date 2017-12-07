@@ -10,8 +10,6 @@ let auth = jwt({
     userProperty: 'payload'
 });
 
-// TODO: auth toevoegen waar nodig! 
-
 // Get all todos
 router.get('/', auth, function (req, res, next) {
     let query = Todo.find()
